@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import { Heroe } from '../interfaces/heroe.interface';
 import { HeroesService } from '../../services/heroes.service';
 import { Router, ActivatedRoute} from '@angular/router';
+import { format } from 'path';
 
 
 
@@ -28,9 +29,18 @@ export class HeroeComponent implements OnInit {
 
     this.route.params
       .subscribe(
-      parametros => this.id = parametros['id']
+      parametros=>{
+
+        this.id = parametros['id']
+        if(this.id!=="nuevo"){
+          this._heroesService.getHeroe(this.id)
+            .subscribe(heroe => this.heroe = heroe);
+        }
+
+      }
 
     );
+
   }
 
   ngOnInit() {
@@ -58,6 +68,15 @@ export class HeroeComponent implements OnInit {
       error=> console.error(error));
 
     }
+
+  }
+
+  agregarNuevo(form: NgForm){
+    this.router.navigate(['/heroe','nuevo']);
+    form.reset({
+      casa:"Marvel"
+
+    });
 
   }
 
