@@ -9,8 +9,10 @@ import {map} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 )
+
 export class HeroesService {
-  heroesURL: string = "https://heroesapp-ec9cf.firebaseio.com/heroes.json"
+  heroesURL: string = "https://heroesapp-ec9cf.firebaseio.com/heroes.json";
+  heroeURL: string = "https://heroesapp-ec9cf.firebaseio.com/heroes/";
 
   constructor(private http: HttpClient) {
 
@@ -29,4 +31,19 @@ export class HeroesService {
             ));
 
    }
+
+   actualizarHeroe(heroe: Heroe, key$:string) {
+    let body = JSON.stringify(heroe);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    let url = `${this.heroeURL}/${key$}.json`;
+   return this.http.put(url, body, { headers})
+       .pipe(
+         map(res => {
+           console.log(res);
+           return res; }
+           ));
+
+  }
 }
