@@ -56,4 +56,15 @@ export class HeroesService {
         map(res => res)
       );
   }
+
+  //metodo que retonra todos los heroes
+
+  getHeroes(){
+
+
+    return this.http.get(this.heroesURL)
+      .pipe(
+        map(res => res)
+      );
+  }
 }
